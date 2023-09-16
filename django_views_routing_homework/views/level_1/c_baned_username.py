@@ -14,5 +14,6 @@ BANNED_USERNAMES = ['red_dev', 'green_bear', 'monster']
 
 
 def is_username_banned_view(request, username: str):
-    # код писать тут
+    if username in BANNED_USERNAMES:
+        return HttpResponse('User banned')
     return HttpResponse('User not banned')
