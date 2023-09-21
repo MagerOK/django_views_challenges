@@ -10,5 +10,5 @@ from django.http import HttpResponse
 
 
 def bye_user_view(request):
-    bye_message = 'Bye, user'
+    bye_message = 'Zatim, user'
     return HttpResponse(bye_message)
