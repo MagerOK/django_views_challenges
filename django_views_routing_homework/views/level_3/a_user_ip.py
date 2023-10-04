@@ -9,6 +9,6 @@ from django.views import View
 from django.http import HttpResponse, HttpRequest
 
 
-class Show_User_IP_View(View):
+class ShowUserIpView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
         return HttpResponse(request.META["REMOTE_ADDR"])
