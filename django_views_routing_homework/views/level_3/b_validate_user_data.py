@@ -43,7 +43,7 @@ class ValidateUserDataView(View):
         try:
             int(age)
             return True
-        except TypeError and ValueError:
+        except TypeError or ValueError:
             return False
 
     def validate_all_data(self, data: dict) -> dict:
