@@ -20,6 +20,8 @@
 import json
 import re
 
+from django.core.validators import EmailValidator
+from django.core.exceptions import ValidationError
 from django.http import HttpResponse, HttpRequest
 from django.http import JsonResponse
 from django.views import View
@@ -27,23 +29,28 @@ from django.views import View
 
 class ValidateUserDataView(View):
 
-    def validate_full_name(self, full_name: str) -> bool:
+    @staticmethod
+    def validate_full_name(full_name: str) -> bool:
         return 5 <= len(full_name) <= 256
 
-    def validate_email(self, email: str) -> bool:
-        pattern = r"^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
-        if re.match(pattern, email):
+    @staticmethod
+    def validate_email(email: str) -> bool:
+        validator = EmailValidator()
+        try:
+            validator(email)
             return True
-        return False
-    
-    def validate_registered_from(self, registered_from: str) -> bool:
+        except ValidationError:
+            return False
+        
+    @staticmethod
+    def validate_registered_from(registered_from: str) -> bool:
         return registered_from in ["website", "mobile_app"]
     
-    def validate_age(self, age: int) -> bool:
+    @staticmethod
+    def validate_age(age: str) -> bool:
         try:
-            int(age)
-            return True
-        except TypeError or ValueError:
+            return age.isdigit()
+        except AttributeError:
             return False
 
     def validate_all_data(self, data: dict) -> dict:
