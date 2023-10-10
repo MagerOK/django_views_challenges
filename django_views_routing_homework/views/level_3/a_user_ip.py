@@ -5,8 +5,10 @@
 https://docs.djangoproject.com/en/4.2/ref/request-response/#django.http.HttpRequest.META
 """
 
+from django.views import View
 from django.http import HttpResponse, HttpRequest
 
 
-def show_user_ip_view(request: HttpRequest) -> HttpResponse:
-    pass  # код писать тут
+class ShowUserIpView(View):
+    def get(self, request: HttpRequest) -> HttpResponse:
+        return HttpResponse(request.META["REMOTE_ADDR"])
